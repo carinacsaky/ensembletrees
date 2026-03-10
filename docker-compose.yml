@@ -1,0 +1,24 @@
+services:
+
+  db:
+    image: postgis/postgis:16-3.5-alpine
+    container_name: riskdata_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${DB_NAME:-riskdata}
+      POSTGRES_USER:     ${DB_USER:-geoserver}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD must be set in .env}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro   # SQL scripts run on first start
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-geoserver} -d ${DB_NAME:-riskdata}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local

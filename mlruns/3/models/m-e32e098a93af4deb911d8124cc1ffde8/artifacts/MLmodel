@@ -1,0 +1,23 @@
+artifact_path: /home/carina/work/ensembletrees/mlruns/3/models/m-e32e098a93af4deb911d8124cc1ffde8/artifacts
+flavors:
+  python_function:
+    artifacts:
+      model_bundle:
+        path: artifacts/model.pkl
+        uri: /home/carina/work/ensembletrees/output/model.pkl
+    cloudpickle_version: 3.1.2
+    code: null
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.12.3
+    streamable: false
+mlflow_version: 3.10.1
+model_id: m-e32e098a93af4deb911d8124cc1ffde8
+model_size_bytes: 8550500
+model_uuid: m-e32e098a93af4deb911d8124cc1ffde8
+prompts: null
+run_id: 352e709cfdee4b61bcef37ddaa871718
+utc_time_created: '2026-03-05 13:37:45.700893'

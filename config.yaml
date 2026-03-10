@@ -1,0 +1,94 @@
+# ============================================================
+# ensembletrees — PAD Insurance Coverage Model — Configuration
+# ============================================================
+# Secrets (DB password, API keys) must be set via environment
+# variables or a .env file — never put passwords here.
+# ============================================================
+
+# ----------------------------------------------------------
+# Database connection defaults (overridden by env vars DB_HOST etc.)
+# ----------------------------------------------------------
+database:
+  host:     "10.100.0.10"
+  port:     5432                       # docker-compose default: 5432
+  name:     "riskdata"
+  user:     "geoserver"
+  password: ""                         # set via DB_PASSWORD env var or .env
+
+# ----------------------------------------------------------
+# Country / analysis scope
+# ----------------------------------------------------------
+country_code: "RO"                     # ISO 3166-1 alpha-2 used in nuts3_eu_admin
+focus_county: "Iasi"                   # county highlighted in county drill-down plots
+
+# ----------------------------------------------------------
+# Input file paths (relative to the project root)
+# ----------------------------------------------------------
+paths:
+  xlsx:            "data/input/UAT-Grad-cuprindere-in-asigurare-la-31-01-2026.xlsx"
+  waterway_geojson: "data/input/hotosm_rou_waterways_lines.geojson"
+  unemployment_pdf: "someri-localitati-ian-2026.pdf"
+  output_dir:      "output"
+
+# ----------------------------------------------------------
+# Cache files (written on first run, re-used on subsequent runs)
+# ----------------------------------------------------------
+cache:
+  locality_coords:   "data/cache/locality_coords_ro.csv"
+  waterway_dist:     "data/cache/locality_waterway_dist_ro.csv"
+  building_counts:   "data/cache/building_counts_ro.csv"
+  unemployment:      "data/cache/unemployment_ro.csv"
+
+# ----------------------------------------------------------
+# Waterway processing
+# ----------------------------------------------------------
+waterway:
+  types: ["river", "canal", "stream"]  # OSM waterway types to include
+
+# ----------------------------------------------------------
+# Google Maps geocoding (runs once, result cached)
+# ----------------------------------------------------------
+google_api_key: "${GOOGLE_API_KEY:}"   # set in .env
+
+# ----------------------------------------------------------
+# Model hyperparameters
+# ----------------------------------------------------------
+model:
+  cv_folds: 5
+  random_state: 42
+  bootstrap_iterations: 100            # prediction uncertainty (set to 0 to skip)
+
+  lgbm:
+    n_estimators: 300
+    learning_rate: 0.03
+    num_leaves: 15
+    min_child_samples: 20
+
+  rf:
+    n_estimators: 300
+    min_samples_leaf: 10
+    max_depth: 6
+
+  xgb:
+    n_estimators: 300
+    learning_rate: 0.03
+    max_depth: 4
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+# ----------------------------------------------------------
+# Business / actuarial constants
+# ----------------------------------------------------------
+business:
+  avg_premium_eur: 20.0                # PAD Type A = 20 EUR/yr
+  sum_insured_eur: 20000               # statutory sum insured per policy (EUR)
+  vulnerability_factor: 0.30           # mean damage ratio (simplified MDR)
+  mandatory_scenario_rate: 0.80        # 80% compliance enforcement scenario
+  cat_stress_multiplier: 3.0           # approx 1-in-100yr loss multiplier
+
+# ----------------------------------------------------------
+# Output options
+# ----------------------------------------------------------
+output:
+  save_plots: true                     # set to false to skip matplotlib figures
+  plot_dpi: 150
