@@ -1,6 +1,16 @@
 # Secrets
 .env
 
+# MLflow local tracking
+mlruns/
+mlflow.db
+
+# Claude Code local settings
+.claude/
+
+# Scratch figures
+Figure_*.png
+
 # Virtual environment
 .venv/
 venv/

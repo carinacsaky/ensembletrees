@@ -1,0 +1,19 @@
+{
+    "tip_code": 1,
+    "n_locuinte": 158000,
+    "n_pad": 55000,
+    "loc_lat": 45.7489,
+    "loc_lon": 21.2087,
+    "urbn_type": 1,
+    "mount_type": 3,
+    "coast_type": 3,
+    "dist_to_waterway_km": 0.3,
+    "n_buildings_flood": 27470,
+    "n_buildings_earthquake": 27431,
+    "n_buildings_fire": 27472,
+    "n_active_perils": 3,
+    "log_total_buildings": 11.319025,
+    "avg_insured_net_flood": 299525.33,
+    "avg_insured_net_fire": 298977.20,
+    "coverage_rate_public": 0.42
+}
